@@ -1,11 +1,14 @@
+//init express enviornment.
 const express = require("express");
 const server = express();
 
+// define port we will use.
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is listening on port:${PORT}`);
 })
 
+// DB will be used as callback info.
 const destinationsDB = {
     123456: {
       destination: "Eiffel Tower",
@@ -21,17 +24,18 @@ const destinationsDB = {
     },
   };
 
+  // get, client read function
 server.get('/destinations', (req,res) => {
     res.send(destinationsDB)
 });
 
 // CREATE (OPTIONAL)
-
+server.post
 // READ => DO THIS
 // GET /destinations => send back the whole db
 
 // UPDATE (OPTIONAL)
-
+server.put
 // DELETE (OPTIONAL)
 
 
