@@ -1,6 +1,16 @@
-//init express enviornment.
-const express = require("express");
+//importing express with require, importing CommonJS module.
+
+// Import ES module, use import keyword.
+//import express from "express", "type": "module" in package.json
+// const express = require("express");
+// const server = express();
+
+import  express, { application }  from "express";
+import cors from "cors";
+import { filterDestinations } from "./helpers.js";
+
 const server = express();
+server.use(cors());
 
 // define port we will use.
 const PORT = process.env.PORT || 3000;
@@ -22,12 +32,29 @@ const destinationsDB = {
       photo:
         "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80",
     },
+    345678:{
+      destination: "Great Firewall",
+      location: "China",
+      photo: "https://www.china-briefing.com/news/wp-content/uploads/2017/06/China-firewall-banner.jpg"
+    }
   };
 
   // get, client read function
 server.get('/destinations', (req,res) => {
-    res.send(destinationsDB)
+  const city = req.query.city;
+  filterDestinations({ city, destinationsDB, res});
+
 });
+
+server.get('/destinations/city/:myCity', (req,res) =>{
+const city = req.params.myCity;
+// console.log(myCity); // for test
+filterDestinations({city, destinationsDB, res});
+
+});
+
+
+
 
 // CREATE (OPTIONAL)
 server.post
